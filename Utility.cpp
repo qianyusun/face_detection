@@ -9,8 +9,8 @@
 using namespace std;
 using namespace cv;
 
-test_data_folder = "TestData";
-test_info = "test_info.txt";
+string test_data_folder = "TestData";
+string test_info = "test_info.txt";
 
 int vectorsum(std::vector<int> v){
     int sum=0;

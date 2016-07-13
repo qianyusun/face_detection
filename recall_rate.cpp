@@ -11,8 +11,7 @@ using namespace std;
 using namespace cv;
 
 string face_cascade_name = "cascade.xml";
-extern std::string test_data_folder;
-extern std::string test_info;
+
 CascadeClassifier face_cascade;
 
 std::vector<int> pos_answer_num;
