@@ -9,6 +9,9 @@
 using namespace std;
 using namespace cv;
 
+test_data_folder = "TestData";
+test_info = "test_info.txt";
+
 int vectorsum(std::vector<int> v){
     int sum=0;
     for(std::vector<int>::iterator it = v.begin(); it != v.end(); ++it){    
