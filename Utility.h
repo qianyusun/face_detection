@@ -8,6 +8,8 @@
 #include <iosfwd>
 #include <vector>
 
+string test_data_folder = "TestData";
+string test_info = "test_info.txt";
 
 int vectorsum(std::vector<int> v);
 std::vector<cv::Rect> ReadRectInfo(std::string folder, std::string filename, std::string image_name);
