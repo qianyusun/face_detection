@@ -1,5 +1,5 @@
 #include "recall_rate.h"
-#include "Utility.h"
+#include "utility.h"
 
 #include <iostream>
 #include <stdio.h>
