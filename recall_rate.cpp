@@ -47,7 +47,7 @@ int main( int argc, char** argv )
 		//Load Image
 		Mat frame;
 		Mat frame_gray;
-		frame = imread( test_data_folder + "/" + image[num], 1 );
+		frame = imread( image[num], 1 );
 		cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
 		equalizeHist( frame_gray, frame_gray );
 		
