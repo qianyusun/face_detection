@@ -104,7 +104,7 @@ std::vector<String> getImageNames (void){
         exit(1);
     }
     std::string line;
-    std::string word
+    std::string word;
     while (getline(filestream, line)) {
         istringstream iss(line);
         iss >> word;    
