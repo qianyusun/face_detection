@@ -64,7 +64,7 @@ int main( int argc, char** argv )
 
     //Cut rectangles
     CutRect(argv[1] ,ResultFaces, &frame);
-    imwrite("origin.jpg", frame)
+    imwrite("origin.jpg", frame);
     //Display the window
     // namedWindow("Display Image", WINDOW_AUTOSIZE );
     // imshow( "Display Image", frame );  
