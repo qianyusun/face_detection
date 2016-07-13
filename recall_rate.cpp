@@ -71,8 +71,8 @@ int main( int argc, char** argv )
 			evaluate_pos_neg_rate(faces_ans, faces, &frame);
 			
 			//Display the window
-			namedWindow(image[num], WINDOW_AUTOSIZE );
-			imshow(image[num], frame );  
+			// namedWindow(image[num], WINDOW_AUTOSIZE );
+			// imshow(image[num], frame );  
 		}
 	}
 	
