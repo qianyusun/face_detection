@@ -12,7 +12,7 @@ using namespace cv;
 extern std::string test_data_folder;
 extern std::string test_info;
 
-String face_cascade_name = "cascade.xml";
+String face_cascade_name = "/home/ubuntu/face_cascade_example/profile_face_model/cascade.xml";
 CascadeClassifier face_cascade;
 
 void detectAndDisplay( Mat frame );
