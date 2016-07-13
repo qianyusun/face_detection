@@ -15,7 +15,6 @@ extern std::string test_info;
 String face_cascade_name = "/home/ubuntu/face_cascade_example/profile_face_model/cascade.xml";
 CascadeClassifier face_cascade;
 
-void detectAndDisplay( Mat frame );
 bool testOverlap(Rect&, Rect&, int);
 void testNextRect(std::vector<Rect>&, Rect&, std::vector<int>&);
 // void moveRect(std::vector<Rect>&);
@@ -65,7 +64,7 @@ int main( int argc, char** argv )
 
     //Cut rectangles
     CutRect(argv[1] ,ResultFaces, &frame);
-    
+    imwrite("origin.jpg", frame)
     //Display the window
     // namedWindow("Display Image", WINDOW_AUTOSIZE );
     // imshow( "Display Image", frame );  
