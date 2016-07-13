@@ -85,15 +85,15 @@ bool overlap_bool(Rect rectA, std::vector<Rect> answer, int threshold ){
     return 0;
 }
 
-void draw_rects(Mat *frame, std::vector<Rect> faces, int color, int thickness, int lineType){
-    for( size_t i = 0; i < faces.size(); i++ )
-        {
-            Point top_left( faces[i].x, faces[i].y);
-            Point bottom_right( faces[i].x + faces[i].width, faces[i].y + faces[i].height );
-            rectangle(*frame, top_left, bottom_right, color, thickness, lineType);
-            //cout << faces[i].x <<" "<<faces[i].y<<" "<< faces[i].x+faces[i].width<<" "<< faces[i].y+faces[i].height<<"\n"; 
-        }
-}
+// void draw_rects(Mat *frame, std::vector<Rect> faces, int color, int thickness, int lineType){
+//     for( size_t i = 0; i < faces.size(); i++ )
+//         {
+//             Point top_left( faces[i].x, faces[i].y);
+//             Point bottom_right( faces[i].x + faces[i].width, faces[i].y + faces[i].height );
+//             rectangle(*frame, top_left, bottom_right, color, thickness, lineType);
+//             //cout << faces[i].x <<" "<<faces[i].y<<" "<< faces[i].x+faces[i].width<<" "<< faces[i].y+faces[i].height<<"\n"; 
+//         }
+// }
    
 std::vector<String> getImageNames (void){
     std::vector<String> Ans;
