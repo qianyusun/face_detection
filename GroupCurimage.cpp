@@ -76,7 +76,7 @@ int main( int argc, char** argv )
 
 void CutRect(std::string image_name, std::vector<Rect>& ResultFaces, Mat* ptr) {
     std::vector<Rect> faces_ans;
-    face_ans = ReadRectInfo(test_data_folder, test_info, image_name);
+    faces_ans = ReadRectInfo(test_data_folder, test_info, image_name);
 
     for( size_t i = 0; i < ResultFaces.size(); i++ )
     {
@@ -91,11 +91,10 @@ void CutRect(std::string image_name, std::vector<Rect>& ResultFaces, Mat* ptr) {
             cv::Mat croppedFaceImage;
             croppedFaceImage = (*ptr)(ResultFaces[i]).clone();
             std::string path;
-            if (overlap_bool(ResultFaces[i], face_ans, 30)
+            if (overlap_bool(ResultFaces[i], face_ans, 30))
                 path = "positive/";
             else
                 path = "negative/";
-
             std::string name =  image_name.substr(image_name.find_last_of("/")+1) + "croppedimage_" + patch::to_string(i) + ".jpg";
             imwrite(path + name, croppedFaceImage);
         }
