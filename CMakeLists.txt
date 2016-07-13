@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 project( recall_rate )
 find_package( OpenCV REQUIRED )
-add_executable( exe GroupCurimage.cpp Utility.cpp )
+add_executable( exe cut_image.cpp utility.cpp )
 target_link_libraries( exe ${OpenCV_LIBS} )
