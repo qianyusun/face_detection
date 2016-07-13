@@ -96,7 +96,7 @@ void CutRect(std::string image_name, std::vector<Rect>& ResultFaces, Mat* ptr) {
                 path = "negative/";
             std::string name = "croppedimage_" + patch::to_string(i) + ".jpg";
             cout << "writing to " << path << name << endl;
-            imwrite(name, croppedFaceImage);
+            imwrite(path+name, croppedFaceImage);
         }
         
     }
