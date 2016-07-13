@@ -7,7 +7,7 @@
 #include <string>
 
 using namespace std;
-using namespace vc;
+using namespace cv;
 
 int vectorsum(std::vector<int> v){
     int sum=0;
