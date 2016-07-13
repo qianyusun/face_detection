@@ -1,9 +1,13 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+
 #include <iosfwd>
 #include <vector>
-class Rect;
+
 
 int vectorsum(std::vector<int> v);
 std::vector<Rect> ReadRectInfo(std::string folder, std::string filename, std::string image_name);
