@@ -1,3 +1,5 @@
+#include "Utility.h"
+
 #include "opencv2/objdetect.hpp"
 #include "opencv2/videoio.hpp"
 #include "opencv2/highgui.hpp"
@@ -11,15 +13,19 @@
 using namespace std;
 using namespace cv;
 
+
+extern std::string test_data_folder;
+extern std::string test_info;
+
 String face_cascade_name = "cascade.xml";
 CascadeClassifier face_cascade;
 
 void detectAndDisplay( Mat frame );
 bool testOverlap(Rect&, Rect&, int);
 void testNextRect(std::vector<Rect>&, Rect&, std::vector<int>&);
-void moveRect(std::vector<Rect>&);
+// void moveRect(std::vector<Rect>&);
 void testAllRect(std::vector<Rect>&, std::vector<Rect>&, std::vector<int>&);
-void CutRect(std::vector<Rect>&, Mat*);
+void CutRect(std::string image_name, std::vector<Rect>&, Mat*);
 
 namespace patch
 {
@@ -52,7 +58,7 @@ int main( int argc, char** argv )
     cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
     equalizeHist( frame_gray, frame_gray );
     //Detect faces
-    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0, Size(80, 80) );
+    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0, Size(200, 200) );
     
     //combine rectangles------added code
     std::vector<Rect> ResultFaces;
@@ -60,7 +66,7 @@ int main( int argc, char** argv )
     std::vector<int> weight;
     weight.push_back(1);
     testAllRect(ResultFaces, faces, weight);
-    moveRect(ResultFaces);
+    // moveRect(ResultFaces);
 
     //Cut rectangles
     CutRect(ResultFaces, &frame);
@@ -73,7 +79,10 @@ int main( int argc, char** argv )
 	return 0;
 }
 
-void CutRect(std::vector<Rect>& ResultFaces, Mat* ptr) {
+void CutRect(std::string image_name, std::vector<Rect>& ResultFaces, Mat* ptr) {
+    std::vector<Rect> faces_ans;
+    face_ans = ReadRectInfo(test_data_folder, test_info, image_name);
+
     for( size_t i = 0; i < ResultFaces.size(); i++ )
     {
         Point top_left( ResultFaces[i].x, ResultFaces[i].y);
@@ -86,34 +95,40 @@ void CutRect(std::vector<Rect>& ResultFaces, Mat* ptr) {
             //cut image
             cv::Mat croppedFaceImage;
             croppedFaceImage = (*ptr)(ResultFaces[i]).clone();
-            std::string name = "croppedimage_" + patch::to_string(i) + ".jpg";
-            imwrite(name, croppedFaceImage);
+            std::string path;
+            if (overlap_bool(ResultFaces[i], face_ans, 30)
+                path = "positive/";
+            else
+                path = "negative/";
+
+            std::string name =  image_name.substr(image_name.find_last_of("/")+1) + "croppedimage_" + patch::to_string(i) + ".jpg";
+            imwrite(path + name, croppedFaceImage);
         }
         
     }
 }
 
 //move the true rect up, down, left, right
-void moveRect(std::vector<Rect>& ResultFaces) {
-    size_t orisize = ResultFaces.size();
-    for(size_t i = 0; i < orisize; i++) {
-        //if(....) {
-            Rect move = ResultFaces[i];
-            move.x = ResultFaces[i].x + ResultFaces[i].width * rand() % 100 / 2000.;
-            ResultFaces.push_back(move);
-            move = ResultFaces[i];
-            move.x = ResultFaces[i].x - ResultFaces[i].width * rand() % 100 / 2000.;
-            ResultFaces.push_back(move);
-            move = ResultFaces[i];
-            move.y = ResultFaces[i].y - ResultFaces[i].height * rand() % 100 / 2000.;
-            ResultFaces.push_back(move);
-            move = ResultFaces[i];
-            move.y = ResultFaces[i].y + ResultFaces[i].height * rand() % 100 / 2000.;
-            ResultFaces.push_back(move);
-         //}
-    }
+// void moveRect(std::vector<Rect>& ResultFaces) {
+//     size_t orisize = ResultFaces.size();
+//     for(size_t i = 0; i < orisize; i++) {
+//         //if(....) {
+//             Rect move = ResultFaces[i];
+//             move.x = ResultFaces[i].x + ResultFaces[i].width * rand() % 100 / 2000.;
+//             ResultFaces.push_back(move);
+//             move = ResultFaces[i];
+//             move.x = ResultFaces[i].x - ResultFaces[i].width * rand() % 100 / 2000.;
+//             ResultFaces.push_back(move);
+//             move = ResultFaces[i];
+//             move.y = ResultFaces[i].y - ResultFaces[i].height * rand() % 100 / 2000.;
+//             ResultFaces.push_back(move);
+//             move = ResultFaces[i];
+//             move.y = ResultFaces[i].y + ResultFaces[i].height * rand() % 100 / 2000.;
+//             ResultFaces.push_back(move);
+//          //}
+//     }
     
-}
+// }
 
 void testAllRect(std::vector<Rect>&  ResultFaces, std::vector<Rect>& faces, std::vector<int>& weight) {
     for(size_t i = 1; i < faces.size(); i++) {

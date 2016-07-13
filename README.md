@@ -1,5 +1,5 @@
 Open this directory in terminal.Enter the following commands:
 
-Cmake .
+cmake .
 make
 ./DisplayImage a.jpg
