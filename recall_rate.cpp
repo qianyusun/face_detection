@@ -72,7 +72,7 @@ int main( int argc, char** argv )
 			
 			//Display the window
 			// namedWindow(image[num], WINDOW_AUTOSIZE );
-			// imshow(image[num], frame );  
+			imwrite(image[num], frame );  
 		}
 	}
 	
