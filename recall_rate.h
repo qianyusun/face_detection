@@ -9,4 +9,5 @@
 
 void evaluate_recall_rate(std::vector<cv::Rect> faces,std::vector<cv::Rect> faces_ans, cv::Mat *frame);
 void evaluate_pos_neg_rate(std::vector<cv::Rect> faces,std::vector<cv::Rect> faces_ans, cv::Mat *frame);
+
 #endif
