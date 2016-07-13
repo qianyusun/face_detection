@@ -10,9 +10,9 @@
 using namespace std;
 using namespace cv;
 
-String face_cascade_name = "cascade.xml";
-String test_data_folder = "TestData";
-String test_info = "test_info.txt";
+string face_cascade_name = "cascade.xml";
+string test_data_folder = "TestData";
+string test_info = "test_info.txt";
 CascadeClassifier face_cascade;
 
 std::vector<int> pos_answer_num;
