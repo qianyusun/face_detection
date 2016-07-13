@@ -3,7 +3,7 @@
 
 #include <iosfwd>
 #include <vector>
-Class Rect;
+class Rect;
 
 int vectorsum(std::vector<int> v);
 std::vector<Rect> ReadRectInfo(std::string folder, std::string filename, std::string image_name);
