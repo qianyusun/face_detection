@@ -64,7 +64,7 @@ int main( int argc, char** argv )
 
     //Cut rectangles
     CutRect(argv[1] ,ResultFaces, &frame);
-    imwrite("origin.jpg", frame);
+    // imwrite("origin.jpg", frame);
     //Display the window
     // namedWindow("Display Image", WINDOW_AUTOSIZE );
     // imshow( "Display Image", frame );  
@@ -89,6 +89,7 @@ void CutRect(std::string image_name, std::vector<Rect>& ResultFaces, Mat* ptr) {
             //cut image
             cv::Mat croppedFaceImage;
             croppedFaceImage = (*ptr)(ResultFaces[i]).clone();
+            imwrite("origin.jpg", *ptr);
             std::string path;
             if (overlap_bool(ResultFaces[i], faces_ans, 30))
                 path = "positive/";
