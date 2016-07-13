@@ -10,7 +10,7 @@
 using namespace std;
 using namespace cv;
 
-string face_cascade_name = "cascade.xml";
+string face_cascade_name = "/home/ubuntu/face_cascade_example/profile_face_model/cascade.xml";
 
 CascadeClassifier face_cascade;
 
