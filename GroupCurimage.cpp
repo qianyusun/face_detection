@@ -1,10 +1,5 @@
 #include "Utility.h"
 
-#include "opencv2/objdetect.hpp"
-#include "opencv2/videoio.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-
 #include <iostream>
 #include <stdio.h>
 #include <string>
@@ -69,11 +64,11 @@ int main( int argc, char** argv )
     // moveRect(ResultFaces);
 
     //Cut rectangles
-    CutRect(ResultFaces, &frame);
+    CutRect(argv[1] ,ResultFaces, &frame);
     
     //Display the window
-    namedWindow("Display Image", WINDOW_AUTOSIZE );
-    imshow( "Display Image", frame );  
+    // namedWindow("Display Image", WINDOW_AUTOSIZE );
+    // imshow( "Display Image", frame );  
 
 	waitKey(0);
 	return 0;
