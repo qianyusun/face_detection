@@ -60,12 +60,15 @@ int main( int argc, char** argv )
         //Detect faces
         face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0, Size(200, 200) );
         
+        cout << "after detect face." << endl;
         //combine rectangles------added code
         std::vector<Rect> ResultFaces;
         ResultFaces.push_back(faces[0]); 
         std::vector<int> weight;
         weight.push_back(1);
         testAllRect(ResultFaces, faces, weight);
+
+        cout << "after test all rect" << endl;
 
         //Cut rectangles
         CutRect(image[num] ,ResultFaces, &frame); 
