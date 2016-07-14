@@ -74,14 +74,12 @@ int main( int argc, char** argv )
 }
 
 void CutRect(std::string image_path, std::vector<Rect>& ResultFaces, Mat* ptr) {
-
+    string image_name = image_path.substr(image_path.find_last_of("/")+1);
+    image_name = image_name.substr(0, image_name.find_last_of("."));
     for( size_t i = 0; i < ResultFaces.size(); i++ )
     {
         Point top_left( ResultFaces[i].x, ResultFaces[i].y);
         Point bottom_right( ResultFaces[i].x + ResultFaces[i].width, ResultFaces[i].y + ResultFaces[i].height );
-        string image_name = image_path.substr(image_path.find_last_of("/")+1);
-        image_name = image_name.substr(0, image_name.find_last_of("."));
-
         //make sure rect inside original image 
         if((ResultFaces[i].x > 0) && (ResultFaces[i].y > 0) && 
             ((ResultFaces[i].width + ResultFaces[i].x) < (*ptr).size().width) &&
@@ -97,6 +95,7 @@ void CutRect(std::string image_path, std::vector<Rect>& ResultFaces, Mat* ptr) {
             std::string name = image_name + "_" + to_string(i) + ".jpg";
             cout << "writing to " << path << name << endl;
             imwrite(path+name, croppedFaceImage);
+            cout << "after imwrite" << endl;
         }
     }
 }
