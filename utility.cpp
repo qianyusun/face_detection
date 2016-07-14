@@ -9,7 +9,7 @@
 using namespace std;
 using namespace cv;
 
-string test_data_folder = "/home/ubuntu/get_face_info";
+string test_data_folder = "/home/ubuntu/get_face_info/";
 string test_info = "pos_info_left.txt";
 
 int vectorsum(vector<int> v){
@@ -95,7 +95,7 @@ vector<String> getImageNames (){
 
     ifstream filestream;
     string filename;
-    filename = test_data_folder + "/" + test_info;
+    filename = test_data_folder + test_info;
     filestream.open(filename.c_str());
     if ( !filestream.is_open()){
         cout << "open failed" << endl;
