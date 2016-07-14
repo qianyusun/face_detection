@@ -38,7 +38,7 @@ void ReadImagesInfo(string file_path, unordered_map<string, vector<Rect>>& image
         iss >> image_path;
         iss >> face_num;
         string image_name = image_path.substr(image_path.find_last_of("/")+1);
-        image_name = image_name.substr(0, image_name.find_last_of("."))
+        image_name = image_name.substr(0, image_name.find_last_of("."));
         for (int i = 0; i < face_num; i++ ){
                 iss >> x >> y >> w >> h;
                 image_rects.push_back(Rect(x,y,w,h));
