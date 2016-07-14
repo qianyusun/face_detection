@@ -83,22 +83,21 @@ void CutRect(std::string image_path, std::vector<Rect>& ResultFaces, Mat* ptr) {
         image_name = image_name.substr(0, image_name.find_last_of("."));
 
         //make sure rect inside original image 
-        if((ResultFaces[i].x > 0) && (ResultFaces[i].y > 0) && 
+        if((ResultFaces[pedFaceImage;
+            croppedFaceImage = (*ptr)(ResultFaces[i]).clone();
+            std::string path;
+            if (overlap_bool(ResultFaces[i], images_info[image_name], 30))i].x > 0) && (ResultFaces[i].y > 0) && 
             ((ResultFaces[i].width + ResultFaces[i].x) < (*ptr).size().width) &&
             ((ResultFaces[i].height + ResultFaces[i].y) < (*ptr).size().height)) {
             //cut image
-            cv::Mat croppedFaceImage;
-            croppedFaceImage = (*ptr)(ResultFaces[i]).clone();
-            std::string path;
-            if (overlap_bool(ResultFaces[i], images_info[image_name], 30))
+            cv::Mat crop
                 path = "positive/";
             else
                 path = "negative/";
-            std::string name = image_name + "croppedimage_" + to_string(i) + ".jpg";
+            std::string name = image_name + "_" + to_string(i) + ".jpg";
             cout << "writing to " << path << name << endl;
             imwrite(path+name, croppedFaceImage);
         }
-        
     }
 }
 
