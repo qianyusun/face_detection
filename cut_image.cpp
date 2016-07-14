@@ -42,15 +42,16 @@ int main( int argc, char** argv )
     }
 	
     ReadImagesInfo(test_data_folder + test_info, images_info);
+    if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading face cascade\n"); return -1; };
+
     // cout <<  "image size:" << image.size() << endl;
 	for (int num = 0; num < image.size(); num++){//per image in the folder  
-        cout << "processing image "<< num << endl;
+        cout << "processing image "<< image[num] << endl;
         Mat frame;
         Mat frame_gray;
         std::vector<Rect> faces;
             
         //Load Trained Model   
-        if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading face cascade\n"); return -1; };
         //Load Image
         frame = imread( image[num], 1 );
     	//Preprocess
