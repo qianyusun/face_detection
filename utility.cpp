@@ -46,7 +46,6 @@ void ReadImagesInfo(string file_path, unordered_map<string, vector<Rect>>& image
         images_info[image_name] = image_rects;
     }
     filestream.close();
-    return image_rects;
 }
 
 
