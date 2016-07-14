@@ -26,7 +26,7 @@ void ReadImagesInfo(string file_path, unordered_map<string, vector<Rect>>& image
     filestream.open(file_path.c_str());
     if ( !filestream.is_open()){
         cout << "open failed" << endl;
-        cout << "in readinfo, " << filename << endl;
+        cout << "in readinfo, " << file_path << endl;
         exit(1);
     }
     string line;
