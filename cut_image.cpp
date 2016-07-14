@@ -44,7 +44,7 @@ int main( int argc, char** argv )
     ReadImagesInfo(test_data_folder + test_info, images_info);
     if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading face cascade\n"); return -1; };
 
-    // cout <<  "image size:" << image.size() << endl;
+    cout <<  "image size:" << image.size() << endl;
 	for (int num = 0; num < image.size(); num++){//per image in the folder  
         cout << "processing image "<< image[num] << endl;
         Mat frame;
@@ -76,7 +76,7 @@ int main( int argc, char** argv )
 void CutRect(std::string image_path, std::vector<Rect>& ResultFaces, Mat* ptr) {
     string image_name = image_path.substr(image_path.find_last_of("/")+1);
     image_name = image_name.substr(0, image_name.find_last_of("."));
-    // cout <<  "resultfaces size: " << ResultFaces.size() << endl;
+    cout <<  "resultfaces size: " << ResultFaces.size() << endl;
     for( size_t i = 0; i < ResultFaces.size(); i++ )
     {
         Point top_left( ResultFaces[i].x, ResultFaces[i].y);
@@ -94,9 +94,8 @@ void CutRect(std::string image_path, std::vector<Rect>& ResultFaces, Mat* ptr) {
             else
                 path = "negative/";
             std::string name = image_name + "_" + to_string(i) + ".jpg";
-            // cout << "writing to " << path << name << endl;
+            cout << "writing to " << path << name << endl;
             imwrite(path+name, croppedFaceImage);
-            // cout << "after imwrite" << endl;
         }
     }
 }
