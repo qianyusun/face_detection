@@ -63,7 +63,7 @@ int main( int argc, char** argv )
         cout << "after detect face." << endl;
         //combine rectangles------added code
         std::vector<Rect> ResultFaces = {};
-        if (!face.empty())
+        if (!faces.empty())
         {
             ResultFaces.push_back(faces[0]); 
             std::vector<int> weight;
