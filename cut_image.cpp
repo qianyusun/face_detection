@@ -79,8 +79,8 @@ void CutRect(std::string image_path, std::vector<Rect>& ResultFaces, Mat* ptr) {
     {
         Point top_left( ResultFaces[i].x, ResultFaces[i].y);
         Point bottom_right( ResultFaces[i].x + ResultFaces[i].width, ResultFaces[i].y + ResultFaces[i].height );
-        string image_name = image_path.sub_str(image_path.find_last_of("/")+1);
-        image_name = image_name.sub_str(0, image_name.find_last_of("."))
+        string image_name = image_path.substr(image_path.find_last_of("/")+1);
+        image_name = image_name.substr(0, image_name.find_last_of("."));
 
         //make sure rect inside original image 
         if((ResultFaces[i].x > 0) && (ResultFaces[i].y > 0) && 

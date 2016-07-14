@@ -20,7 +20,7 @@ int vectorsum(vector<int> v){
     return sum;
 }
 
-void ReadImagesInfo(string file_path, unordered_map<sting, vector<Rect>>& images_info);
+void ReadImagesInfo(string file_path, unordered_map<string, vector<Rect>>& images_info);
     //Read in real positions
     ifstream filestream;
     filestream.open(file_path.c_str());
@@ -37,8 +37,8 @@ void ReadImagesInfo(string file_path, unordered_map<sting, vector<Rect>>& images
         istringstream iss(line);
         iss >> image_path;
         iss >> face_num;
-        string image_name = image_path.sub_str(image_path.find_last_of("/")+1);
-        image_name = image_name.sub_str(0, image_name.find_last_of("."))
+        string image_name = image_path.substr(image_path.find_last_of("/")+1);
+        image_name = image_name.substr(0, image_name.find_last_of("."))
         for (int i = 0; i < face_num; i++ ){
                 iss >> x >> y >> w >> h;
                 image_rects.push_back(Rect(x,y,w,h));
