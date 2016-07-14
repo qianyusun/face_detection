@@ -12,46 +12,41 @@ using namespace cv;
 string test_data_folder = "/home/ubuntu/get_face_info";
 string test_info = "pos_info_left.txt";
 
-int vectorsum(std::vector<int> v){
+int vectorsum(vector<int> v){
     int sum=0;
-    for(std::vector<int>::iterator it = v.begin(); it != v.end(); ++it){    
+    for(vector<int>::iterator it = v.begin(); it != v.end(); ++it){    
         sum += *it;
     }
     return sum;
 }
 
-std::vector<Rect> ReadRectInfo (string folder, string filename, string image_name){
-    std::vector<Rect> Ans;
+void ReadImagesInfo(string file_path, unordered_map<sting, vector<Rect>>& images_info);
     //Read in real positions
     ifstream filestream;
-    filename = folder + "/" + filename;
-    filestream.open(filename.c_str());
+    filestream.open(file_path.c_str());
     if ( !filestream.is_open()){
         cout << "open failed" << endl;
         exit(1);
     }
-    std::string line;
-    std::string word;
+    string line;
+    string image_path;
     int face_num;
     int x,y,w,h;
     while (getline(filestream, line)) {
+        vector<Rect> image_rects;
         istringstream iss(line);
-        iss >> word;    
-        if (word == image_name) {
-            iss >> face_num;
-            for (int i = 0; i < face_num; i++ ){
-                    iss >> x;
-                    iss >> y;
-                    iss >> w;
-                    iss >> h;
-                    //cout << "x=" << x <<  " y=" << y << " x2=" << x+w << " y2=" << y+h <<"\n";
-                    Ans.push_back(Rect(x,y,w,h));
-            }
+        iss >> image_path;
+        iss >> face_num;
+        string image_name = image_path.sub_str(image_path.find_last_of("/")+1);
+        image_name = image_name.sub_str(0, image_name.find_last_of("."))
+        for (int i = 0; i < face_num; i++ ){
+                iss >> x >> y >> w >> h;
+                image_rects.push_back(Rect(x,y,w,h));
         }
+        images_info[image_name] = image_rects;
     }
     filestream.close();
-    //cout << Ans[0].x <<Ans[0].y<< Ans[0].width<< Ans[0].height<<"\n"; 
-    return Ans;
+    return image_rects;
 }
 
 
@@ -62,7 +57,7 @@ std::vector<Rect> ReadRectInfo (string folder, string filename, string image_nam
  * "threshold" in percentage, return 1, return 0 otherwise.
  * 
  */
-bool overlap_bool(Rect rectA, std::vector<Rect> answer, int threshold ){
+bool overlap_bool(Rect rectA, vector<Rect> answer, int threshold ){
     int x1,y1,x2,y2,overlap;
     for (int j = 0; j < answer.size(); j++ ){//per face detected
         x1 = max(rectA.x,answer[j].x);
@@ -85,7 +80,7 @@ bool overlap_bool(Rect rectA, std::vector<Rect> answer, int threshold ){
     return 0;
 }
 
-// void draw_rects(Mat *frame, std::vector<Rect> faces, int color, int thickness, int lineType){
+// void draw_rects(Mat *frame, vector<Rect> faces, int color, int thickness, int lineType){
 //     for( size_t i = 0; i < faces.size(); i++ )
 //         {
 //             Point top_left( faces[i].x, faces[i].y);
@@ -95,8 +90,8 @@ bool overlap_bool(Rect rectA, std::vector<Rect> answer, int threshold ){
 //         }
 // }
    
-std::vector<String> getImageNames (void){
-    std::vector<String> Ans;
+vector<String> getImageNames (void){
+    vector<String> Ans;
 
     ifstream filestream;
     string filename;
@@ -106,8 +101,8 @@ std::vector<String> getImageNames (void){
         cout << "open failed" << endl;
         exit(1);
     }
-    std::string line;
-    std::string word;
+    string line;
+    string word;
     while (getline(filestream, line)) {
         istringstream iss(line);
         iss >> word;    

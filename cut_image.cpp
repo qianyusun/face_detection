@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+#include <unordered_map>
 
 using namespace std;
 using namespace cv;
@@ -20,66 +21,66 @@ void testNextRect(std::vector<Rect>&, Rect&, std::vector<int>&);
 void testAllRect(std::vector<Rect>&, std::vector<Rect>&, std::vector<int>&);
 void CutRect(std::string image_name, std::vector<Rect>&, Mat*);
 
-// namespace patch
-// {
-//     template < typename T > std::string to_string( const T& n )
-//     {
-//         std::ostringstream stm ;
-//         stm << n ;
-//         return stm.str() ;
-//     }
-// }
+unordered_map<string, vector<Rect>> images_info;
 
 int main( int argc, char** argv )
 {
-    if ( argc != 2 )
+    std::vector<string> image;
+
+    if (argc == 1){
+        //Scan the folder
+        image=getImageNames();
+    }
+    else if (argc == 2){
+        //Detect one file
+        image.push_back(argv[1]);
+    }
+    else
     {
-        printf("usage: DisplayImage.out <Image_Path>\n");
-        return -1;
+       printf("Wrong command.");
+       return -1;
     }
 	
-	
-    Mat frame;
-    Mat frame_gray;
-    std::vector<Rect> faces;
+    ReadImagesInfo(test_data_folder + test_info, images_info);
+	for (int num = 0; num < image.size(); num++){//per image in the folder  
+
+        Mat frame;
+        Mat frame_gray;
+        std::vector<Rect> faces;
+            
+        //Load Trained Model   
+        if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading face cascade\n"); return -1; };
+        //Load Image
+        frame = imread( image[num], 1 );
+    	//Preprocess
+        cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
+        equalizeHist( frame_gray, frame_gray );
+        //Detect faces
+        face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0, Size(200, 200) );
         
-    //Load Trained Model   
-    if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading face cascade\n"); return -1; };
-    //Load Image
-    frame = imread( argv[1], 1 );
-	//Preprocess
-    cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
-    equalizeHist( frame_gray, frame_gray );
-    //Detect faces
-    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0, Size(200, 200) );
-    
-    //combine rectangles------added code
-    std::vector<Rect> ResultFaces;
-    ResultFaces.push_back(faces[0]); 
-    std::vector<int> weight;
-    weight.push_back(1);
-    testAllRect(ResultFaces, faces, weight);
-    // moveRect(ResultFaces);
+        //combine rectangles------added code
+        std::vector<Rect> ResultFaces;
+        ResultFaces.push_back(faces[0]); 
+        std::vector<int> weight;
+        weight.push_back(1);
+        testAllRect(ResultFaces, faces, weight);
 
-    //Cut rectangles
-    CutRect(argv[1] ,ResultFaces, &frame);
-    // imwrite("origin.jpg", frame);
-    //Display the window
-    // namedWindow("Display Image", WINDOW_AUTOSIZE );
-    // imshow( "Display Image", frame );  
+        //Cut rectangles
+        CutRect(image[num] ,ResultFaces, &frame); 
 
-	waitKey(0);
+	   waitKey(0);
+    }
 	return 0;
 }
 
-void CutRect(std::string image_name, std::vector<Rect>& ResultFaces, Mat* ptr) {
-    std::vector<Rect> faces_ans;
-    faces_ans = ReadRectInfo(test_data_folder, test_info, image_name);
+void CutRect(std::string image_path, std::vector<Rect>& ResultFaces, Mat* ptr) {
 
     for( size_t i = 0; i < ResultFaces.size(); i++ )
     {
         Point top_left( ResultFaces[i].x, ResultFaces[i].y);
         Point bottom_right( ResultFaces[i].x + ResultFaces[i].width, ResultFaces[i].y + ResultFaces[i].height );
+        string image_name = image_path.sub_str(image_path.find_last_of("/")+1);
+        image_name = image_name.sub_str(0, image_name.find_last_of("."))
 
         //make sure rect inside original image 
         if((ResultFaces[i].x > 0) && (ResultFaces[i].y > 0) && 
@@ -88,13 +89,12 @@ void CutRect(std::string image_name, std::vector<Rect>& ResultFaces, Mat* ptr) {
             //cut image
             cv::Mat croppedFaceImage;
             croppedFaceImage = (*ptr)(ResultFaces[i]).clone();
-            imwrite("origin.jpg", croppedFaceImage);
             std::string path;
-            if (overlap_bool(ResultFaces[i], faces_ans, 30))
+            if (overlap_bool(ResultFaces[i], images_info[image_name], 30))
                 path = "positive/";
             else
                 path = "negative/";
-            std::string name = "croppedimage_" + to_string(i) + ".jpg";
+            std::string name = image_name + "croppedimage_" + to_string(i) + ".jpg";
             cout << "writing to " << path << name << endl;
             imwrite(path+name, croppedFaceImage);
         }
