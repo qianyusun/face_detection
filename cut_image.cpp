@@ -62,14 +62,15 @@ int main( int argc, char** argv )
         
         cout << "after detect face." << endl;
         //combine rectangles------added code
-        std::vector<Rect> ResultFaces;
-        ResultFaces.push_back(faces[0]); 
-        std::vector<int> weight;
-        weight.push_back(1);
-        testAllRect(ResultFaces, faces, weight);
-
-        cout << "after test all rect" << endl;
-
+        std::vector<Rect> ResultFaces = {};
+        if (!face.empty())
+        {
+            ResultFaces.push_back(faces[0]); 
+            std::vector<int> weight;
+            weight.push_back(1);
+            testAllRect(ResultFaces, faces, weight);
+            cout << "after test all rect" << endl;
+        }
         //Cut rectangles
         CutRect(image[num] ,ResultFaces, &frame); 
     }
