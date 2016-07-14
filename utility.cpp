@@ -20,7 +20,7 @@ int vectorsum(vector<int> v){
     return sum;
 }
 
-void ReadImagesInfo(string file_path, unordered_map<string, vector<Rect>>& images_info);
+void ReadImagesInfo(string file_path, unordered_map<string, vector<Rect>>& images_info){
     //Read in real positions
     ifstream filestream;
     filestream.open(file_path.c_str());
