@@ -26,6 +26,7 @@ void ReadImagesInfo(string file_path, unordered_map<string, vector<Rect>>& image
     filestream.open(file_path.c_str());
     if ( !filestream.is_open()){
         cout << "open failed" << endl;
+        cout << "in readinfo, " << filename << endl;
         exit(1);
     }
     string line;
@@ -89,7 +90,7 @@ bool overlap_bool(Rect rectA, vector<Rect> answer, int threshold ){
 //         }
 // }
    
-vector<String> getImageNames (void){
+vector<String> getImageNames (){
     vector<String> Ans;
 
     ifstream filestream;
@@ -98,6 +99,7 @@ vector<String> getImageNames (void){
     filestream.open(filename.c_str());
     if ( !filestream.is_open()){
         cout << "open failed" << endl;
+        cout << "in getImageNames, " << filename << endl;
         exit(1);
     }
     string line;
